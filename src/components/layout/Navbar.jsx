@@ -90,8 +90,8 @@ export default function Navbar({
         </div>
       </div>
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-3 md:gap-4 h-16">
+      <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 sm:gap-4 h-16">
 
           {/* Zone 1: Brand Wordmark */}
           <div className="flex items-center shrink-0">
@@ -196,11 +196,11 @@ export default function Navbar({
 
           {/* Zone 3: Actions & Auth / Admin switch */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Day / Night Mood Toggle Button */}
+            {/* Day / Night Mood Toggle Button (Desktop & Tablet only, inside mobile drawer on phones) */}
             <button
               onClick={toggleTheme}
               aria-label={isDark ? 'Switch to Day Mood (Light)' : 'Switch to Night Mood (Dark)'}
-              className="p-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 hover:text-amber-500 dark:hover:text-amber-400 hover:border-amber-400 transition-colors"
+              className="hidden sm:flex p-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 hover:text-amber-500 dark:hover:text-amber-400 hover:border-amber-400 transition-colors"
               title={isDark ? 'Day Mood (Light)' : 'Night Mood (Dark)'}
             >
               {isDark ? (
@@ -210,11 +210,11 @@ export default function Navbar({
               )}
             </button>
 
-            {/* Admin Panel Toggle Button */}
+            {/* Admin Panel Toggle Button (Desktop only, inside mobile drawer on phones) */}
             {isAdmin && (
               <button
                 onClick={() => setCurrentView(currentView === 'admin' ? 'home' : 'admin')}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-lg border transition-all ${currentView === 'admin'
+                className={`hidden md:flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-lg border transition-all ${currentView === 'admin'
                     ? 'bg-amber-500 text-neutral-950 border-amber-400 shadow-md shadow-amber-500/25'
                     : 'bg-neutral-100 dark:bg-neutral-800 text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-neutral-200 dark:hover:bg-neutral-700'
                   }`}
@@ -234,10 +234,10 @@ export default function Navbar({
               </button>
             )}
 
-            {/* Wishlist Button */}
+            {/* Wishlist Button (Tablet & Desktop, accessible in mobile drawer on phones) */}
             <button
               onClick={() => setIsWishlistOpen(true)}
-              className="relative p-2 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
+              className="hidden sm:flex relative p-2 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
               title="View Wishlist"
             >
               <Heart className="w-4.5 h-4.5" />
@@ -248,10 +248,10 @@ export default function Navbar({
               )}
             </button>
 
-            {/* Cart Button */}
+            {/* Cart Button (Always visible on all screens) */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="flex items-center gap-2 px-2.5 py-1.5 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-750 border border-neutral-300 dark:border-neutral-700 rounded-lg text-neutral-800 dark:text-neutral-200 transition-all group"
+              className="flex items-center gap-1.5 p-1.5 sm:px-2.5 sm:py-1.5 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-750 border border-neutral-300 dark:border-neutral-700 rounded-lg text-neutral-800 dark:text-neutral-200 transition-all group"
               title="Shopping Cart"
             >
               <div className="relative">
@@ -267,18 +267,20 @@ export default function Navbar({
               </span>
             </button>
 
-            {/* User Account / Profile Menu */}
+            {/* User Account / Profile Menu (Shows avatar only on mobile, avatar + name on desktop) */}
             <div className="relative">
               {user ? (
                 <div className="relative">
                   <button
                     onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                    className="flex items-center gap-2 p-1 pl-1.5 pr-2.5 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
+                    className="flex items-center gap-1.5 p-1 sm:pl-1.5 sm:pr-2.5 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
+                    title={user.name || user.email}
                   >
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xs font-bold text-neutral-950 shrink-0">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xs font-bold text-neutral-950 shrink-0">
                       {user.name ? user.name[0].toUpperCase() : 'U'}
                     </div>
-                    <span className="text-xs font-medium text-neutral-800 dark:text-neutral-200 max-w-[85px] sm:max-w-[105px] truncate">
+                    {/* User's full name is hidden on phones to avoid container overflow, visible on md+ screens */}
+                    <span className="hidden md:inline-block text-xs font-semibold text-neutral-800 dark:text-neutral-200 max-w-[105px] truncate">
                       {user.name}
                     </span>
                   </button>
@@ -366,28 +368,77 @@ export default function Navbar({
               ) : (
                 <button
                   onClick={() => openAuthModal('login')}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-amber-500 hover:bg-amber-400 text-neutral-950 rounded-lg shadow-sm transition-colors"
+                  className="flex items-center gap-1 p-1.5 sm:px-3 sm:py-1.5 text-xs font-semibold bg-amber-500 hover:bg-amber-400 text-neutral-950 rounded-lg shadow-sm transition-colors"
+                  title="Login / Register"
                 >
                   <User className="w-3.5 h-3.5" />
-                  <span>Login / Register</span>
+                  <span className="hidden sm:inline">Login</span>
                 </button>
               )}
             </div>
 
-            {/* Mobile menu toggle */}
+            {/* Mobile menu toggle (3 bar hamburger icon) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+              className="lg:hidden p-2 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              aria-label="Toggle navigation menu"
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5 text-amber-500" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Dropdown Menu with HOME, ALL DEVICES, ABOUT US, CONTACT (with Orange Active State) */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-neutral-200 dark:border-neutral-800 space-y-3">
-            <nav className="grid grid-cols-2 gap-2 pb-2 border-b border-neutral-200 dark:border-neutral-800">
+          <div className="lg:hidden py-4 border-t border-neutral-200 dark:border-neutral-800 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150">
+            {/* User Account summary in mobile menu */}
+            {user ? (
+              <div className="flex items-center justify-between p-3 bg-neutral-100 dark:bg-neutral-800/80 rounded-xl border border-neutral-200 dark:border-neutral-700/60">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xs font-bold text-neutral-950 shrink-0">
+                    {user.name ? user.name[0].toUpperCase() : 'U'}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-neutral-900 dark:text-white truncate">{user.name}</p>
+                    <p className="text-[10px] text-neutral-500 dark:text-neutral-400 truncate">{user.email}</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25 uppercase font-semibold">
+                        {user.role}
+                      </span>
+                      {user.isVerified && (
+                        <span className="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                          <ShieldCheck className="w-3 h-3" /> Verified
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="p-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-lg transition-colors"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  openAuthModal('login');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-center gap-2 py-2.5 bg-amber-500 hover:bg-amber-400 text-neutral-950 font-bold text-xs rounded-xl shadow-sm transition-colors"
+              >
+                <User className="w-4 h-4" />
+                <span>Sign In / Create Account</span>
+              </button>
+            )}
+
+            {/* Navigation 2x2 grid */}
+            <nav className="grid grid-cols-2 gap-2 pb-1 border-b border-neutral-200 dark:border-neutral-800">
               <button
                 onClick={handleHomeClick}
                 className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-bold transition-all ${isHomeActive
@@ -445,36 +496,49 @@ export default function Navbar({
               />
             </div>
 
-            <div className="flex items-center justify-between gap-2">
+            {/* Mobile Actions: Wishlist, Day/Night Mood & Admin */}
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => {
+                  setIsWishlistOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="py-2.5 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 text-neutral-800 dark:text-neutral-200"
+              >
+                <Heart className="w-4 h-4 text-amber-500" />
+                <span>Wishlist ({wishlist.length})</span>
+              </button>
+
               <button
                 onClick={toggleTheme}
-                className="flex-1 py-2 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 text-neutral-800 dark:text-neutral-200"
+                className="py-2.5 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 text-neutral-800 dark:text-neutral-200"
               >
                 {isDark ? (
                   <>
                     <Sun className="w-4 h-4 text-amber-400" />
-                    <span>Switch to Day Mood</span>
+                    <span>Day Mood</span>
                   </>
                 ) : (
                   <>
                     <Moon className="w-4 h-4 text-amber-600" />
-                    <span>Switch to Night Mood</span>
+                    <span>Night Mood</span>
                   </>
                 )}
               </button>
-              {isAdmin && (
-                <button
-                  onClick={() => {
-                    setCurrentView(currentView === 'admin' ? 'home' : 'admin');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="flex-1 py-2 bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 rounded-lg text-xs font-semibold flex items-center justify-center gap-2"
-                >
-                  <LayoutDashboard className="w-4 h-4" />
-                  <span>{currentView === 'admin' ? 'Storefront' : 'Admin Panel'}</span>
-                </button>
-              )}
             </div>
+
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  setCurrentView(currentView === 'admin' ? 'home' : 'admin');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full py-2.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 rounded-lg text-xs font-bold flex items-center justify-center gap-2"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                <span>{currentView === 'admin' ? 'Back to Storefront' : 'Open Admin Panel'}</span>
+              </button>
+            )}
           </div>
         )}
       </div>

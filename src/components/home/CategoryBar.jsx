@@ -30,7 +30,7 @@ const ICON_MAP = {
 
 export default function CategoryBar({ selectedCategory, onSelectCategory }) {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 mb-6 sm:mb-8">
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 font-mono">
           Browse By Hardware Category

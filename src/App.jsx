@@ -187,7 +187,7 @@ function StorefrontContent() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 flex flex-col selection:bg-amber-500 selection:text-neutral-950 transition-colors duration-200">
       <Toast />
-      
+
       {/* Top Navigation with Active Highlight */}
       <Navbar
         currentView={currentView}
@@ -238,7 +238,7 @@ function StorefrontContent() {
             />
 
             {/* Catalog Section */}
-            <div id="products-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
+            <div id="products-section" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 scroll-mt-20">
               {/* Header for All Devices view */}
               {currentView === 'devices' && (
                 <div className="mb-6 pb-4 border-b border-neutral-200 dark:border-neutral-800">

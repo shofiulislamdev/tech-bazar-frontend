@@ -34,8 +34,8 @@ export default function HeroSlider({ slides, onSelectCategory }) {
   };
 
   return (
-    <div 
-      className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8"
+    <div
+      className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-6 sm:pb-8"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -119,11 +119,10 @@ export default function HeroSlider({ slides, onSelectCategory }) {
               key={slide.id || idx}
               onClick={() => setCurrentSlideIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`h-1.5 transition-all rounded-full ${
-                currentSlideIndex === idx
+              className={`h-1.5 transition-all rounded-full ${currentSlideIndex === idx
                   ? 'w-8 bg-amber-400'
                   : 'w-2 bg-neutral-600 hover:bg-neutral-400'
-              }`}
+                }`}
             />
           ))}
         </div>
