@@ -1,0 +1,6 @@
+{
+  "name": "Tech Bazar",
+  "description": "Tech Bazar - Modern E-Commerce platform for tech devices, PC components, and gadgets with admin management, authentication, filters, cart, and wishlist.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
